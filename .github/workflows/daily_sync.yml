@@ -24,7 +24,7 @@ jobs:
         
     - name: Run GitHub to Notion sync
       env:
-        GH_PAT: ${{ secrets.GH_PAT }}  # 環境変数名を変更
+        GH_PAT: ${{ secrets.GH_PAT }}
         NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
         NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
       run: python github_to_notion.py
