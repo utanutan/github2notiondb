@@ -10,8 +10,9 @@ GitHub Actionsにより毎日自動的に同期が実行されます。
 pip install -r requirements.txt
 ```
 
-2. GitHub Personal Access Tokenの設定:
-- GitHubの設定ページから Personal Access Token を生成
+2. GitHub Personal Access Token (PAT)の設定:
+- GitHubの設定ページ（Settings > Developer settings > Personal access tokens > Tokens (classic)）からPATを生成
+  - 必要な権限: `repo` と `read:user`
 - `.env.example` を `.env` にコピーし、トークンを設定
 ```bash
 cp .env.example .env
@@ -27,6 +28,7 @@ cp .env.example .env
 
 4. GitHub Actionsの設定:
 - リポジトリの"Settings" > "Secrets and variables" > "Actions"で以下のシークレットを設定:
+  - `GH_PAT`: GitHub Personal Access Token（上記で生成したもの）
   - `NOTION_TOKEN`: NotionのAPIトークン
   - `NOTION_DATABASE_ID`: NotionのデータベースID
 
