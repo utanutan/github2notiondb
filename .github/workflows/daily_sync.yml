@@ -1,0 +1,41 @@
+name: Daily GitHub to Notion Sync
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # 毎日UTC 00:00 (JST 09:00)に実行
+  workflow_dispatch:  # 手動実行も可能
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        
+    - name: Run GitHub to CSV export
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: python github_to_csv.py
+        
+    - name: Run CSV to Notion sync
+      env:
+        NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+        NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
+      run: python csv_to_notion.py
+        
+    - name: Commit and push if changes
+      run: |
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+        git add github_repositories.csv
+        git diff --quiet && git diff --staged --quiet || (git commit -m "Update repository data [skip ci]" && git push)

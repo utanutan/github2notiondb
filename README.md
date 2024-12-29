@@ -1,6 +1,7 @@
 # GitHub Repository Data Exporter
 
 GitHubのリポジトリ情報をCSVファイルとして出力し、Notionデータベースに同期するツールです。
+GitHub Actionsにより毎日自動的に同期が実行されます。
 
 ## セットアップ
 
@@ -25,7 +26,18 @@ cp .env.example .env
   - CSVファイル
   - IDE関連ファイル
 
+4. GitHub Actionsの設定:
+- リポジトリの"Settings" > "Secrets and variables" > "Actions"で以下のシークレットを設定:
+  - `NOTION_TOKEN`: NotionのAPIトークン
+  - `NOTION_DATABASE_ID`: NotionのデータベースID
+
 ## 使用方法
+
+### 自動実行
+GitHub Actionsにより毎日UTC 00:00（JST 09:00）に自動的に同期が実行されます。
+また、GitHubのActionsタブから手動で実行することも可能です。
+
+### 手動実行
 
 1. GitHubデータをCSVに出力:
 ```bash
