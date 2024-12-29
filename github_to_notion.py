@@ -6,7 +6,10 @@ import pytz
 
 def get_repository_data():
     """GitHubからリポジトリ情報を取得"""
-    github_token = os.getenv('GH_PAT')
+    github_token = os.getenv('GH_PAT')  # GITHUB_TOKENからGH_PATに変更
+    if not github_token:
+        raise ValueError("GH_PAT environment variable is not set")
+    
     g = Github(github_token)
     user = g.get_user()
     
