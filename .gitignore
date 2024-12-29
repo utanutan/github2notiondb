@@ -33,5 +33,4 @@ env/
 *.swo
 
 # Project specific
-*.csv
 .DS_Store

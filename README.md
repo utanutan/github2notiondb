@@ -1,6 +1,6 @@
 # GitHub Repository Data Exporter
 
-GitHubのリポジトリ情報をCSVファイルとして出力し、Notionデータベースに同期するツールです。
+GitHubのリポジトリ情報をNotionデータベースに同期するツールです。
 GitHub Actionsにより毎日自動的に同期が実行されます。
 
 ## セットアップ
@@ -23,7 +23,6 @@ cp .env.example .env
   - Python関連ファイル（`__pycache__`, `.pyc`など）
   - 仮想環境ディレクトリ
   - `.env`ファイル（機密情報保護のため）
-  - CSVファイル
   - IDE関連ファイル
 
 4. GitHub Actionsの設定:
@@ -39,24 +38,18 @@ GitHub Actionsにより毎日UTC 00:00（JST 09:00）に自動的に同期が実
 
 ### 手動実行
 
-1. GitHubデータをCSVに出力:
+GitHubのリポジトリ情報をNotionデータベースに同期:
 ```bash
-python github_to_csv.py
+python github_to_notion.py
 ```
 
-2. CSVデータをNotionに同期:
-```bash
-python csv_to_notion.py
-```
-
-## 出力データ項目
+## 同期データ項目
 
 - リポジトリ名: リポジトリの名前
 - 説明: リポジトリの概要
 - URL: GitHubリポジトリのURL
-- ステータス: 開発中/メンテナンス中/アーカイブ
+- ステータス: Active/Archived
 - 更新日: 最終更新日
 - オーナー/担当者: リポジトリオーナー
 - 技術スタック: 使用されている技術一覧
 - プライバシー設定: 公開/プライベート
-- タグ: カテゴリタグ（必要に応じて追加）

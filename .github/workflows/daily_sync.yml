@@ -22,24 +22,9 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         
-    - name: Run GitHub to CSV export
+    - name: Run GitHub to Notion sync
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: python github_to_csv.py
-        
-    - name: Run CSV to Notion sync
-      env:
         NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
         NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
-      run: python csv_to_notion.py
-        
-    - name: Commit and push if changes
-      run: |
-        git config --global user.name 'github-actions[bot]'
-        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-        # CSVファイルが存在する場合のみ git add を実行
-        if [ -f github_repositories.csv ]; then
-          git add github_repositories.csv
-          # 変更がある場合のみコミットとプッシュを実行
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Update repository data [skip ci]" && git push)
-        fi
+      run: python github_to_notion.py
