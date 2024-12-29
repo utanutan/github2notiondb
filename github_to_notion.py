@@ -6,7 +6,7 @@ import pytz
 
 def get_repository_data():
     """GitHubからリポジトリ情報を取得"""
-    github_token = os.getenv('GITHUB_TOKEN')
+    github_token = os.getenv('GH_PAT')
     g = Github(github_token)
     user = g.get_user()
     
